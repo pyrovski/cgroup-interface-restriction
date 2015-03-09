@@ -1,5 +1,8 @@
 ## To install (as root)
     make install
+    
+## To install services (as root)
+    make install_services
 
 ## To uninstall (also as root)
     make uninstall
@@ -46,4 +49,5 @@ in Linux
         - tcp
         - mark (currently used, but could be replaced with cgroup)
 - if test_ping=1, `cgexec` from libcgroup
+- systemd for services, if you're into that sort of thing
 
