@@ -1,0 +1,13 @@
+[Unit]
+Description=Network cgroup filtering
+After=network.target
+
+[Service]
+User=root
+Type=oneshot
+ExecStart=/usr/local/bin/net_cgroup.sh
+ExecStop=/usr/local/bin/net_cgroup.sh -r
+RemainAfterExit=yes
+
+[Install]
+RequiredBy=transmission-ns.service

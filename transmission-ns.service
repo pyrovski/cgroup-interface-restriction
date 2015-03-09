@@ -1,0 +1,13 @@
+[Unit]
+Description=Transmission BitTorrent Daemon
+After=network.target net_cgroup.service
+Requires=net_cgroup.service
+
+[Service]
+User=transmission
+Type=notify
+ExecStart=/usr/bin/cgexec -g net_cls:vpn /usr/bin/transmission-daemon -f --log-error
+ExecReload=/bin/kill -s HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
