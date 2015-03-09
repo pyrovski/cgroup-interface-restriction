@@ -15,7 +15,7 @@ add_tag="-m comment --comment $iptables_tag"
 
 remove_rules (){
     rules=`mktemp`
-    iptables -S -t mangle | grep '\--comment $iptables_tag' | sed 's/^-A/-D/' > "$rules"
+    iptables -S -t mangle | grep "\--comment $iptables_tag" | sed 's/^-A/-D/' > "$rules"
     if [ `wc -l < $rules` -gt 0 ]; then
 	cat "$rules" | xargs -l iptables -t mangle
     fi
@@ -23,6 +23,7 @@ remove_rules (){
 }
 
 if [ "$1" = "-r" ]; then
+    echo "removing iptables rules"
     remove_rules
     exit
 fi
