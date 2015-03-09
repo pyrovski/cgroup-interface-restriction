@@ -37,8 +37,7 @@ in Linux
     - Check `/proc/filesystems` for cgroup
     - net_cls
 
-      Check with `lssubsys -a`. Your kernel probably does not have this. Why? 
-Who knows. You can enable it with `CONFIG_CGROUP_NET_CLASSID`.
+      Check with `lssubsys -a`. Your kernel probably does not have this. Why? Who knows. You can enable it with `CONFIG_CGROUP_NET_CLASSID` [since Linux 3.14](http://cateee.net/lkddb/web-lkddb/CGROUP_NET_CLASSID.html).
 - `iptables`
      - modules
         - comment
