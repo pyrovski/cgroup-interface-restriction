@@ -10,8 +10,7 @@
     - Check `/proc/filesystems` for cgroup
     - net_cls
 
-      Check with `lssubsys -a`. Your kernel probably does not have this. Why? 
-Who knows. You can enable it with `CONFIG_CGROUP_NET_CLASSID`.
+      Check with `lssubsys -a`. Your kernel probably does not have this. Why? Who knows. You can enable it with `CONFIG_CGROUP_NET_CLASSID`.
 - iptables
      - modules
         - comment
