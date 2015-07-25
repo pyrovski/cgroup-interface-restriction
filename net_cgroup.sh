@@ -62,9 +62,10 @@ fi
 "$iptables" -t mangle -A INPUT -p tcp --dport 51413 -i "$block_eth" -j DROP $add_tag
 "$iptables" -t mangle -A INPUT -p udp --dport 51413 -i "$block_eth" -j DROP $add_tag
 
-if [ -n "$test_ping" ]; then
+if [ "$test_ping" != 0 ]; then
     # test outgoing packet from cgroup on blocked interface.
-    "$cgexec" -g net_cls:vpn "$ping" -c 1 -I "$block_eth" -W "$ping_timeout" "$ping_test_ip"
+    # -r: bypass routing
+    "$cgexec" -g net_cls:vpn "$ping" -c 1 -r -I "$block_eth" -W "$ping_timeout" "$ping_test_ip"
     blocked_status=$?
 
     if [ "$blocked_status" = 0 ]; then
