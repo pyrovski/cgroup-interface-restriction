@@ -55,7 +55,7 @@ fi
 iptables -t mangle -A INPUT -p tcp --dport 51413 -i "$block_eth" -j DROP $add_tag
 iptables -t mangle -A INPUT -p udp --dport 51413 -i "$block_eth" -j DROP $add_tag
 
-iptables-save | egrep "\--comment $iptables_tag|&*mangle|COMMIT" | ip6tables-restore
+iptables-save -t mangle | egrep "\--comment $iptables_tag|&*mangle|COMMIT" | ip6tables-restore
 
 if [ "$test_ping" != 0 ]; then
     # test outgoing packet from cgroup on blocked interface.
@@ -75,9 +75,6 @@ if [ "$test_ping" != 0 ]; then
 	>&2 echo "Ping6 from cgroup succeeded! Failed to block cgroup from $block_eth. "
 	exit 1
     fi
-#    if [ "$blocked_status" = 1 ]; then
-#	>&2 echo "
-    #    fi
     # cgexec -g net_cls:vpn ping -c 1 -r I eth0 -W 5 8.8.8.8
 
     # this will only succeed if you have a route through another interface
