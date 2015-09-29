@@ -1,7 +1,8 @@
 [Unit]
 Description=Transmission BitTorrent Daemon
-After=network.target net_cgroup.service
+After=network.target net_cgroup.service pia@US_Silicon_Valley.service
 Requires=net_cgroup.service
+Wants=pia@US_Silicon_Valley.service
 
 [Service]
 User=transmission
