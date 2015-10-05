@@ -18,11 +18,13 @@ remove_rules (){
     ip6tables-save -t mangle | grep -v "\--comment $iptables_tag" | ip6tables-restore
 }
 
-remove_rules
 if [ "$1" = "-r" ]; then
     echo "removing iptables rules"
+    remove_rules
     exit
 fi
+
+#!@todo protect against multiple copies of rules in iptables
 
 # seconds to wait for ping response
 ping_timeout=5
@@ -47,6 +49,8 @@ iptables -t mangle -A OUTPUT -m mark --mark 11 -p tcp --sport 9091 -j ACCEPT $ad
 if [ "$logging" != 0 ]; then
     iptables -t mangle -A OUTPUT -m mark --mark 11 -o "$block_eth" -j LOG $add_tag
 fi
+
+# this prevents all outgoing packets from the affected cgroup from reaching the interface.
 iptables -t mangle -A OUTPUT -m mark --mark 11 -o "$block_eth" -j DROP $add_tag
 
 # drop packets destined for the transmission port coming in on the
@@ -58,7 +62,7 @@ fi
 iptables -t mangle -A INPUT -p tcp --dport 51413 -i "$block_eth" -j DROP $add_tag
 iptables -t mangle -A INPUT -p udp --dport 51413 -i "$block_eth" -j DROP $add_tag
 
-iptables-save -t mangle | egrep "\--comment $iptables_tag|&*mangle|COMMIT" | ip6tables-restore
+iptables-save -t mangle | egrep "\--comment $iptables_tag|&*mangle|COMMIT" | ip6tables-restore -nT mangle
 
 if [ "$test_ping" != 0 ]; then
     # test outgoing packet from cgroup on blocked interface.
