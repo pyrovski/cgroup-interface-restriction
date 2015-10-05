@@ -6,6 +6,9 @@ ping_test_ip=8.8.8.8
 ping_test_ip6=2001:4860:4860::8888
 test_ping=1
 
+#!@todo get transmission port from config file
+#!@todo get config file from command line
+
 iptables_tag=transmission
 add_tag="-m comment --comment $iptables_tag"
 
