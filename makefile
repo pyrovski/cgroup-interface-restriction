@@ -1,5 +1,5 @@
 INSTALL_DEST ?=/usr/local/bin/
-SYSTEMD_SERVICE_DEST ?=/usr/lib/systemd/system/
+SYSTEMD_SERVICE_DEST ?=/etc/systemd/system/
 
 .PHONY: install uninstall install_services
 
